@@ -1,0 +1,155 @@
+* { box-sizing: border-box; }
+
+:root {
+  color-scheme: dark;
+  --ink: #f1eee8;
+  --muted: rgba(241, 238, 232, .68);
+  --line: rgba(241, 238, 232, .28);
+  --ease: cubic-bezier(.2, .75, .25, 1);
+}
+
+html, body { min-height: 100%; margin: 0; background: #11100f; }
+body {
+  color: var(--ink);
+  font-family: "DM Sans", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+
+.landing {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding: 27px 34px 21px;
+  overflow: hidden;
+}
+
+.site-header, .site-footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.site-header { min-height: 34px; margin-bottom: 20px; }
+.wordmark {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .19em;
+  text-decoration: none;
+}
+.wordmark-dot { color: #b68d78; }
+.header-note, .site-footer {
+  font-size: 9px;
+  letter-spacing: .18em;
+  color: var(--muted);
+}
+.worlds {
+  flex: 1;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+.world {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background: #282321;
+  text-decoration: none;
+}
+.world-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(5px) brightness(.65) saturate(.72);
+  transform: scale(1.045);
+  transition: filter 900ms var(--ease), transform 1300ms var(--ease);
+  z-index: -2;
+}
+.image-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(9,8,8,.16), rgba(9,8,8,.10) 35%, rgba(9,8,8,.58));
+  transition: background 700ms var(--ease);
+}
+.world-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 30px 18px;
+  transform: translateY(12px);
+  transition: transform 800ms var(--ease);
+}
+.eyebrow {
+  margin-bottom: 17px;
+  color: rgba(255,255,255,.72);
+  font-size: 9px;
+  letter-spacing: .25em;
+}
+.world-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(32px, 4.1vw, 66px);
+  font-weight: 500;
+  letter-spacing: .055em;
+  line-height: 1.05;
+}
+.world-subtitle {
+  margin-top: 13px;
+  color: rgba(255,255,255,.84);
+  font-size: 11px;
+  letter-spacing: .12em;
+  opacity: .88;
+}
+.enter-link {
+  margin-top: 32px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--line);
+  font-size: 9px;
+  letter-spacing: .2em;
+  opacity: 0;
+  transform: translateY(7px);
+  transition: opacity 650ms var(--ease), transform 650ms var(--ease);
+}
+.enter-link span { margin-left: 9px; }
+.site-footer { padding-top: 18px; }
+.site-footer i { padding: 0 5px; font-style: normal; }
+
+@media (hover: hover) and (pointer: fine) {
+  .world:hover .world-image, .world:focus-visible .world-image {
+    filter: blur(0) brightness(.88) saturate(.95);
+    transform: scale(1.015);
+  }
+  .world:hover .image-shade, .world:focus-visible .image-shade {
+    background: linear-gradient(180deg, rgba(9,8,8,.08), rgba(9,8,8,.02) 35%, rgba(9,8,8,.48));
+  }
+  .world:hover .world-content, .world:focus-visible .world-content { transform: translateY(0); }
+  .world:hover .enter-link, .world:focus-visible .enter-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.world:focus-visible { outline: 1px solid var(--ink); outline-offset: -5px; }
+
+@media (max-width: 700px) {
+  .landing { padding: 20px 16px 16px; }
+  .site-header { margin-bottom: 13px; }
+  .worlds { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; gap: 7px; min-height: 0; }
+  .world { min-height: 36svh; }
+  .world-image { filter: blur(1.5px) brightness(.66) saturate(.75); }
+  .world-content { transform: none; }
+  .world-title { font-size: clamp(34px, 10vw, 52px); }
+  .enter-link { opacity: 1; transform: none; margin-top: 20px; }
+  .site-footer { gap: 12px; font-size: 7px; letter-spacing: .12em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
